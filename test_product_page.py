@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-from pageobject.product_canon_page import ProductCanonPage
+from pageobject.product_apple_page import ProductApplePage
 
 
 class ProductPageTest(unittest.TestCase):
@@ -15,8 +15,8 @@ class ProductPageTest(unittest.TestCase):
     def tearDown(self) -> None:
         self.driver.close()
 
-    def testNameIs(self):
-        product_page = ProductCanonPage(self.driver)
+    def test_name(self):
+        product_page = ProductApplePage(self.driver)
         product_page.open()
         actual_name = product_page.get_name_str()
 
@@ -25,24 +25,17 @@ class ProductPageTest(unittest.TestCase):
             actual_name
         )
 
-    def testBrand(self):
-        product_page = ProductCanonPage(self.driver)
+    def test_brand(self):
+        product_page = ProductApplePage(self.driver)
         product_page.open()
         actual_brand = product_page.get_brand_and_product_code()
         self.assertIn(
             'Brand: Apple',
             actual_brand
-            )
-    def testProductCode(self):
-        product_page = ProductCanonPage(self.driver)
-        product_page.open()
-        actual_product_code = product_page.get_brand_and_product_code()
-        self.assertIn(
-            'Product Code: Product 15',
-            actual_product_code
         )
-    def testPrice(self):
-        product_page = ProductCanonPage(self.driver)
+
+    def test_product_code(self):
+        product_page = ProductApplePage(self.driver)
         product_page.open()
         actual_product_code = product_page.get_brand_and_product_code()
         self.assertIn(
@@ -50,18 +43,17 @@ class ProductPageTest(unittest.TestCase):
             actual_product_code
         )
 
-
-    def test_productOk(self):
-        product_page = ProductCanonPage(self.driver)
+    def test_price(self):
+        product_page = ProductApplePage(self.driver)
         product_page.open()
-
         self.assertEqual(
             '$110.00',
             product_page.get_price()
         )
 
-    def testDescription(self):
-        product_page = ProductCanonPage(self.driver)
+
+    def test_description(self):
+        product_page = ProductApplePage(self.driver)
         product_page.open()
 
         self.assertIn(

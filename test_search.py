@@ -15,18 +15,15 @@ class SearchPageTest(unittest.TestCase):
         self.name_sony = 'Sony VAIO'
         self.search_list = ['HP LP3065', 'iMac']
 
-
     def tearDown(self) -> None:
         self.driver.close()
 
     def test_search_apple(self):
         search_page = SearchPage(self.driver)
         search_page.open()
-        search_page.get_search_field()
         search_page.enter_word('apple')
-        search_page.click_search_button()
+        search_page.search_basic()
         search_page.clear_search()
-
 
         self.assertEqual(
             self.name_apple,
@@ -42,11 +39,9 @@ class SearchPageTest(unittest.TestCase):
     def test_search_sony(self):
         search_page = SearchPage(self.driver)
         search_page.open()
-        search_page.get_search_field()
         search_page.enter_word('sony')
-        search_page.click_search_button()
+        search_page.search_basic()
         search_page.clear_search()
-
 
         self.assertEqual(
             self.name_sony,
@@ -61,9 +56,8 @@ class SearchPageTest(unittest.TestCase):
     def test_search_nokia(self):
         search_page = SearchPage(self.driver)
         search_page.open()
-        search_page.get_search_field()
         search_page.enter_word('nokia')
-        search_page.click_search_button()
+        search_page.search_basic()
         search_page.clear_search()
 
         self.assertIn(
@@ -74,10 +68,9 @@ class SearchPageTest(unittest.TestCase):
     def test_with_search_criteria(self):
         search_page = SearchPage(self.driver)
         search_page.open()
-        search_page.get_search_criteria()
         search_page.enter_word_in_field_criteria('stunning')
         search_page.click_checkbox()
-        search_page.click_button_after_criteria()
+        search_page.search_advanced()
 
         self.assertEqual(
             self.search_list[0],
@@ -89,4 +82,3 @@ class SearchPageTest(unittest.TestCase):
             search_page.get_name_product(self.search_list[1])
 
         )
-

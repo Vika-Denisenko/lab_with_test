@@ -33,17 +33,16 @@ class SearchPage(BasePage):
     def click_checkbox(self):
         self.get_search_checkbox().click()
 
-
     def get_search_button(self) -> WebElement:
         return self.driver.find_element(By.CLASS_NAME, 'btn-default')
 
     def get_button_after_criteria(self) -> WebElement:
         return self.driver.find_element(By.ID, 'button-search')
 
-    def click_search_button(self):
+    def search_basic(self):
         self.get_search_button().click()
 
-    def click_button_after_criteria(self):
+    def search_advanced(self):
         self.get_button_after_criteria().click()
 
     def get_search_description(self) -> WebElement:
