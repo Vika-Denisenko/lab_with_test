@@ -13,7 +13,7 @@ class SearchPageTest(unittest.TestCase):
         self.name_apple = 'Apple Cinema 30"'
         self.price_apple_class = 'price-new'
         self.name_sony = 'Sony VAIO'
-
+        self.search_list = ['HP LP3065', 'iMac']
 
 
     def tearDown(self) -> None:
@@ -24,12 +24,14 @@ class SearchPageTest(unittest.TestCase):
         search_page.open()
         search_page.get_search_field()
         search_page.enter_word('apple')
-        search_page.get_search_button().click()
+        search_page.click_search_button()
         search_page.clear_search()
+
 
         self.assertEqual(
             self.name_apple,
             search_page.get_name_product(self.name_apple)
+
         )
 
         self.assertEqual(
@@ -42,8 +44,9 @@ class SearchPageTest(unittest.TestCase):
         search_page.open()
         search_page.get_search_field()
         search_page.enter_word('sony')
-        search_page.get_search_button().click()
+        search_page.click_search_button()
         search_page.clear_search()
+
 
         self.assertEqual(
             self.name_sony,
@@ -60,7 +63,7 @@ class SearchPageTest(unittest.TestCase):
         search_page.open()
         search_page.get_search_field()
         search_page.enter_word('nokia')
-        search_page.get_search_button().click()
+        search_page.click_search_button()
         search_page.clear_search()
 
         self.assertIn(
@@ -68,8 +71,22 @@ class SearchPageTest(unittest.TestCase):
             search_page.get_expected_text()
         )
 
+    def test_with_search_criteria(self):
+        search_page = SearchPage(self.driver)
+        search_page.open()
+        search_page.get_search_criteria()
+        search_page.enter_word_in_field_criteria('stunning')
+        search_page.click_checkbox()
+        search_page.click_button_after_criteria()
 
+        self.assertEqual(
+            self.search_list[0],
+            search_page.get_name_product(self.search_list[0])
 
+        )
+        self.assertEqual(
+            self.search_list[1],
+            search_page.get_name_product(self.search_list[1])
 
-
+        )
 

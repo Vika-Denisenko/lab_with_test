@@ -12,6 +12,12 @@ class SearchPage(BasePage):
         search_field = self.driver.find_element(By.CLASS_NAME, 'input-lg')
         return search_field
 
+    def get_search_criteria(self) -> WebElement:
+        return self.driver.find_element(By.ID, 'input-search')
+
+    def get_search_checkbox(self) -> WebElement:
+        return self.driver.find_element(By.ID, 'description')
+
     def enter_word(self, word: str):
         search_field = self.get_search_field()
         search_field.send_keys(word)
@@ -20,11 +26,25 @@ class SearchPage(BasePage):
         search_field = self.get_search_field()
         search_field.clear()
 
+    def enter_word_in_field_criteria(self, word: str):
+        criteria_field = self.get_search_criteria()
+        criteria_field.send_keys(word)
+
+    def click_checkbox(self):
+        self.get_search_checkbox().click()
+
+
     def get_search_button(self) -> WebElement:
         return self.driver.find_element(By.CLASS_NAME, 'btn-default')
 
-    def get_search_criteria(self) -> WebElement:
-        return self.driver.find_element(By.ID, 'input-search')
+    def get_button_after_criteria(self) -> WebElement:
+        return self.driver.find_element(By.ID, 'button-search')
+
+    def click_search_button(self):
+        self.get_search_button().click()
+
+    def click_button_after_criteria(self):
+        self.get_button_after_criteria().click()
 
     def get_search_description(self) -> WebElement:
         return self.driver.find_element(By.ID, 'description')
@@ -45,4 +65,3 @@ class SearchPage(BasePage):
     def get_expected_text(self) -> str:
         expected_text = self.driver.find_element(By.ID, 'content').text
         return expected_text
-
