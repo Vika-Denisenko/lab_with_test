@@ -1,17 +1,12 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
+from pageobject.base_page import BasePage
 
-class SearchPage:
-    url = 'http://tutorialsninja.com/demo/index.php?route=product/search'
 
-    def __init__(self, driver: WebDriver):
-        self.driver = driver
-
-    def open(self):
-        '''Открыть страницу логина'''
-        self.driver.get(self.url)
+class SearchPage(BasePage):
+    def get_url(self) -> str:
+        return 'http://54.183.112.233/index.php?route=product/search'
 
     def get_search_field(self) -> WebElement:
         search_field = self.driver.find_element(By.CLASS_NAME, 'input-lg')
