@@ -1,13 +1,19 @@
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support.expected_conditions import visibility_of, text_to_be_present_in_element
+from selenium.webdriver.support.wait import WebDriverWait
 
 from pageobject.base_page import BasePage
 
 
-class ProductApplePage(BasePage):
+class ProductPage(BasePage):
+    def __init__(self, driver: WebDriver, product_id: str):
+        super().__init__(driver)
+        self.product_id = product_id
 
     def get_url(self) -> str:
-        return 'http://54.183.112.233/index.php?route=product/product&product_id=42'
+        return 'http://54.183.112.233/index.php?route=product/product&product_id='+self.product_id
 
     def get_name_str(self) -> str:
         name_str = self.driver.find_element(By.TAG_NAME, 'h1')
@@ -42,13 +48,9 @@ class ProductApplePage(BasePage):
     def review(self):
         self.get_button_review().click()
 
-    def get_warning_text(self) -> str:
-        warning_text = self.driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div[1]/div[1]/div/div[3]/form/div[2]')
+    def get_alert_text(self) -> str:
+        warning_text = self.driver.find_element(By.CLASS_NAME, 'alert-dismissible')
         return warning_text.text
-
-    def get_success_text(self) -> str:
-        success_text = self.driver.find_element((By.CLASS_NAME, 'alert-success'))
-        return success_text.text
 
     def get_name_field(self) -> WebElement:
         return self.driver.find_element(By.ID, 'input-name')
@@ -60,8 +62,8 @@ class ProductApplePage(BasePage):
 
         return self.driver.find_element(By.CSS_SELECTOR, '[value="3"]')
 
-    def click_raning(self):
-        self.get_radio_button().click
+    def rating(self):
+        self.get_radio_button().click()
 
     def enter_name(self, name: str):
         self.get_name_field().send_keys(name)

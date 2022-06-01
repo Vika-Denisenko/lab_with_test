@@ -4,57 +4,52 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-from pageobject.product_apple_page import ProductApplePage
+from pageobject.product_apple_page import ProductPage
 
 
 class AddReviewTest(unittest.TestCase):
-    '''Не работает пока!'''
 
     def setUp(self) -> None:
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         self.name = 'John'
         self.review24 = 'asdfghjklqwertyuiopzxcvb'
         self.review25 = 'asdfghjklqwertyuiopzxcvbf'
+        self.product_id = '42'
+        self.product_page = ProductPage(self.driver, self.product_id)
+        self.product_page.open()
+        self.product_page.open_review()
 
     def tearDown(self) -> None:
         self.driver.close()
 
     def test_reviews_without_rating(self):
-        product_page = ProductApplePage(self.driver)
-        product_page.open()
-        product_page.open_review()
-        product_page.review()
+
+        self.product_page.review()
         self.assertEqual(
             'Warning: Please select a review rating!',
-            product_page.get_warning_text()
+            self.product_page.get_alert_text()
+
         )
 
     def test_with_24(self):
-        product_page = ProductApplePage(self.driver)
-        product_page.open()
-        product_page.open_review()
-        product_page.click_raning()
-        product_page.enter_name(self.name)
-        product_page.enter_review(self.review24)
-        product_page.review()
+        self.product_page.rating()
+        self.product_page.enter_name(self.name)
+        self.product_page.enter_review(self.review24)
+        self.product_page.review()
         self.assertEqual(
             'Warning: Review Text must be between 25 and 1000 characters!',
-            product_page.get_warning_text()
+            self.product_page.get_alert_text()
 
         )
 
     def test_with_25(self):
-        product_page = ProductApplePage(self.driver)
-        product_page.open()
-        product_page.open_review()
-        product_page.click_raning()
-        product_page.enter_name(self.name)
-        product_page.enter_review(self.review25)
-        product_page.review()
+        self.product_page.rating()
+        self.product_page.enter_name(self.name)
+        self.product_page.enter_review(self.review25)
+        self.product_page.review()
         self.assertEqual(
             'Thank you for your review. It has been submitted to the webmaster for approval.',
-            product_page.get_success_text()
-
+            self.product_page.get_alert_text()
         )
 
 

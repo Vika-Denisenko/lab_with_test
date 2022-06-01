@@ -14,4 +14,5 @@ class BasePage:
 
     def open(self):
         '''Открыть страницу логина'''
+        self.driver.implicitly_wait(10)
         self.driver.get(self.get_url())
