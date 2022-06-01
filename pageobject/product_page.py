@@ -1,8 +1,6 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support.expected_conditions import visibility_of_element_located
-from selenium.webdriver.support.wait import WebDriverWait
 
 from pageobject.base_page import BasePage
 
@@ -76,4 +74,16 @@ class ProductPage(BasePage):
 
     def product_comparison(self):
         self.driver.find_element(By.LINK_TEXT, 'product comparison').click()
+
+    def get_field_quantity(self) -> WebElement:
+        return self.driver.find_element(By.ID, 'input-quantity')
+
+    def send_qty(self, quantity):
+        self.get_field_quantity().send_keys(quantity)
+
+    def get_button_card(self) -> WebElement:
+        self.driver.find_element(By.ID, 'button-cart')
+
+    def cart(self):
+        self.get_button_card().click()
 

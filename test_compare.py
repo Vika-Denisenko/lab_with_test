@@ -25,7 +25,7 @@ class CompareTest(unittest.TestCase):
     def test_compare(self):
         '''Проверяем успешно ли добавлен продукт к сравнению'''
         self.assertEqual(
-            'Success: You have added Apple Cinema 30" to your product comparison!',
+            f'Success: You have added {self.product_page.get_name()} to your product comparison!',
             self.product_page.get_alert_text().split('\n')[0]
         )
 
