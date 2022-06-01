@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-from pageobject.product_apple_page import ProductPage
+from pageobject.product_page import ProductPage
 
 
 class ProductPageTest(unittest.TestCase):
@@ -19,7 +19,7 @@ class ProductPageTest(unittest.TestCase):
         self.driver.close()
 
     def test_product(self):
-        actual_name = self.product_page.get_name_str()
+        actual_name = self.product_page.get_name()
         self.assertEqual(
             'Apple Cinema 30"',
             actual_name

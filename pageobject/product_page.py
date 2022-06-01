@@ -1,7 +1,7 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support.expected_conditions import visibility_of, text_to_be_present_in_element
+from selenium.webdriver.support.expected_conditions import visibility_of_element_located
 from selenium.webdriver.support.wait import WebDriverWait
 
 from pageobject.base_page import BasePage
@@ -15,9 +15,9 @@ class ProductPage(BasePage):
     def get_url(self) -> str:
         return 'http://54.183.112.233/index.php?route=product/product&product_id='+self.product_id
 
-    def get_name_str(self) -> str:
-        name_str = self.driver.find_element(By.TAG_NAME, 'h1')
-        return name_str.text
+    def get_name(self) -> str:
+        name = self.driver.find_element(By.TAG_NAME, 'h1')
+        return name.text
 
     def get_brand_and_product_code(self) -> str:
         '''Получаем строку с брэндом и продукт кодом(не нравится мне код, но по другому не придумала как сделать'''
@@ -70,3 +70,10 @@ class ProductPage(BasePage):
 
     def enter_review(self, review: str):
         self.get_review_field().send_keys(review)
+
+    def compare(self):
+        self.driver.find_element(By.CSS_SELECTOR, '[data-original-title="Compare this Product"]').click()
+
+    def product_comparison(self):
+        self.driver.find_element(By.LINK_TEXT, 'product comparison').click()
+
