@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
+from pageobject.cart_page import CartPage
 from pageobject.product_page import ProductPage
 
 
@@ -12,19 +13,53 @@ class ProductPageTest(unittest.TestCase):
     def setUp(self) -> None:
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         self.url_list = ['33', '47']
+        self.qty_list = [2, 1]
         self.product_name = []
-        self.product_page = ProductPage(self.driver, self.url_list[0])
-        self.product_page.open()
-        self.product_page.send_qty(2)
-        self.product_name.append(self.product_page.get_name())
-        self.product_page.cart()
 
     def tearDown(self) -> None:
         self.driver.close()
 
-    def test_product(self):
-        actual_name = self.product_page.get_name()
+    def add_product_to_cart(self):
+        '''Знаю хорошо бы было сделать словарями, а не списками'''
+        for i in range(len(self.url_list)):
+            self.product_page = ProductPage(self.driver, self.url_list[i])
+            self.product_page.open()
+            self.product_page.send_qty(self.qty_list[i])
+            self.product_page.cart()
+            self.product_name.append(self.product_page.get_name())
+
+
+    def test_add_success(self):
+        '''Проверяем успешное добавление товара в корзину'''
+        self.add_product_to_cart()
         self.assertEqual(
-            'Apple Cinema 30"',
-            actual_name
+            f'Success: You have added {self.product_page.get_name()} to your shopping cart!',
+            self.product_page.get_alert_text().split('\n×')[0]
+        )
+
+    def test_shopping_cart(self):
+        '''Проверяем наличие добавленных товаров в корзине и сумму'''
+        self.add_product_to_cart()
+        cart_page = CartPage(self.driver)
+        cart_page.open()
+        for name in self.product_name:
+            self.assertEqual(
+                name,
+                cart_page.get_name(name)
+            )
+        self.assertEqual(
+            '$606.00',
+            cart_page.field_total()
+        )
+
+    def test_clear_cart(self):
+        '''Еще не работает!'''
+        self.add_product_to_cart()
+        cart_page = CartPage(self.driver)
+        cart_page.open()
+        for _ in range(len(self.product_name)):
+            cart_page.remove_cart()
+        self.assertIn(
+            'Your shopping cart is empty!',
+            cart_page.get_content_text()
         )

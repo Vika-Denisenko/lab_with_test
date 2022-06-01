@@ -78,11 +78,15 @@ class ProductPage(BasePage):
     def get_field_quantity(self) -> WebElement:
         return self.driver.find_element(By.ID, 'input-quantity')
 
+    def clear_qty(self):
+        self.get_field_quantity().clear()
+
     def send_qty(self, quantity):
+        self.clear_qty()
         self.get_field_quantity().send_keys(quantity)
 
     def get_button_card(self) -> WebElement:
-        self.driver.find_element(By.ID, 'button-cart')
+        return self.driver.find_element(By.ID, 'button-cart')
 
     def cart(self):
         self.get_button_card().click()

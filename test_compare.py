@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-from pageobject.compare import ComparePage
+from pageobject.compare_page import ComparePage
 from pageobject.product_page import ProductPage
 
 
@@ -29,7 +29,7 @@ class CompareTest(unittest.TestCase):
             self.product_page.get_alert_text().split('\n')[0]
         )
 
-    def add_product(self):
+    def add_product_to_compare(self):
         '''Добавление продуктов в сравнение и их название добавляем в список'''
         for i in range(1, len(self.url_list)):
             product_page = ProductPage(self.driver, self.url_list[i])
@@ -39,7 +39,7 @@ class CompareTest(unittest.TestCase):
 
     def test_product_in_comparison(self):
         '''Проверяем каждое имя на странице сравнения'''
-        self.add_product()
+        self.add_product_to_compare()
         compare_page = ComparePage(self.driver)
         compare_page.open()
 
@@ -51,7 +51,7 @@ class CompareTest(unittest.TestCase):
 
     def test_del_product(self):
         '''Проверяем успешно ли удалены продукты из сравнения'''
-        self.add_product()
+        self.add_product_to_compare()
         compare_page = ComparePage(self.driver)
         compare_page.open()
         for i in range(len(self.product_name)):
