@@ -29,16 +29,20 @@ class CompareTest(unittest.TestCase):
             self.product_page.get_alert_text().split('\n')[0]
         )
 
-    def test_product_in_comparison(self):
+    def add_product(self):
         '''Добавление продуктов в сравнение и их название добавляем в список'''
         for i in range(1, len(self.url_list)):
             product_page = ProductPage(self.driver, self.url_list[i])
             product_page.open()
             self.product_name.append(product_page.get_name())
             product_page.compare()
+
+    def test_product_in_comparison(self):
+        '''Проверяем каждое имя на странице сравнения'''
+        self.add_product()
         compare_page = ComparePage(self.driver)
         compare_page.open()
-        '''Проверяем каждое имя на странице сравнения'''
+
         for name in self.product_name:
             self.assertEqual(
                 name,
@@ -46,11 +50,8 @@ class CompareTest(unittest.TestCase):
             )
 
     def test_del_product(self):
-        for i in range(1, len(self.url_list)):
-            product_page = ProductPage(self.driver, self.url_list[i])
-            product_page.open()
-            self.product_name.append(product_page.get_name())
-            product_page.compare()
+        '''Проверяем успешно ли удалены продукты из сравнения'''
+        self.add_product()
         compare_page = ComparePage(self.driver)
         compare_page.open()
         for i in range(len(self.product_name)):
