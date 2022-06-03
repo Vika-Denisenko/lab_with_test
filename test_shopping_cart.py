@@ -49,7 +49,7 @@ class ProductPageTest(unittest.TestCase):
             )
         self.assertEqual(
             '$606.00',
-            cart_page.field_total()
+            cart_page.total_sum()
         )
 
     def test_clear_cart(self):
@@ -59,6 +59,10 @@ class ProductPageTest(unittest.TestCase):
         cart_page.open()
         for _ in range(len(self.product_name)):
             cart_page.remove_cart()
+            '''!!!'''
+            cart_page = CartPage(self.driver)
+            cart_page.open()
+
         self.assertIn(
             'Your shopping cart is empty!',
             cart_page.get_content_text()
