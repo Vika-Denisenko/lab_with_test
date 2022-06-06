@@ -66,6 +66,7 @@ class ProductPageTest(unittest.TestCase):
             cart_page.open()
 
         self.assertIn(
+
             'Your shopping cart is empty!',
             cart_page.get_content_text()
         )
