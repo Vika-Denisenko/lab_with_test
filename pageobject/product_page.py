@@ -1,3 +1,5 @@
+import random
+
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
@@ -61,10 +63,10 @@ class ProductPage(BasePage):
 
     def get_radio_button(self) -> WebElement:
 
-        return self.driver.find_element(By.CSS_SELECTOR, '[value="3"]')
+        return self.driver.find_elements(By.NAME, 'rating')
 
     def rating(self):
-        self.get_radio_button().click()
+        self.get_radio_button()[random.randint(0, 4)].click()
 
     def enter_name(self, name: str):
         self.get_name_field().send_keys(name)

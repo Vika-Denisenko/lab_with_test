@@ -15,8 +15,8 @@ class AddReviewTest(unittest.TestCase):
     def setUp(self) -> None:
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         self.name = 'John'
-        self.review24 = ''.join(choice(ascii_letters) for i in range(24))
-        self.review25 = ''.join(choice(ascii_letters) for i in range(random.randint(25, 100)))
+        self.review24 = ''.join(choice(ascii_letters) for _ in range(24))
+        self.review25 = ''.join(choice(ascii_letters) for _ in range(random.randint(25, 100)))
         self.product_id = '42'
         self.product_page = ProductPage(self.driver, self.product_id)
         self.product_page.open()
