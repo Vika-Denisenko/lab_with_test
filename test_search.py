@@ -1,6 +1,5 @@
 import unittest
 from decimal import Decimal
-from typing import List
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service

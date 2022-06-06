@@ -66,7 +66,7 @@ class ProductPage(BasePage):
         return self.driver.find_elements(By.NAME, 'rating')
 
     def rating(self):
-        self.get_radio_button()[random.randint(0, 4)].click()
+        self.get_radio_button()[random.randrange(5)].click()
 
     def enter_name(self, name: str):
         self.get_name_field().send_keys(name)
