@@ -1,3 +1,4 @@
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.expected_conditions import element_to_be_clickable, text_to_be_present_in_element, \
@@ -5,6 +6,9 @@ from selenium.webdriver.support.expected_conditions import element_to_be_clickab
 from selenium.webdriver.support.wait import WebDriverWait
 
 from pageobject.base_page import BasePage
+
+
+
 
 
 class CartPage(BasePage):
@@ -20,11 +24,10 @@ class CartPage(BasePage):
 
     def get_remove_button(self) -> WebElement:
         remove_button = self.driver.find_element(By.CSS_SELECTOR, '[data-original-title="Remove"]')
-        
+
         return remove_button
 
     def remove_cart(self):
-
         WebDriverWait(self.driver, timeout=5).until(element_to_be_clickable(self.get_remove_button()))
         self.get_remove_button().click()
 

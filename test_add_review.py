@@ -1,4 +1,7 @@
+import random
 import unittest
+from random import choice
+from string import ascii_letters
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -12,8 +15,8 @@ class AddReviewTest(unittest.TestCase):
     def setUp(self) -> None:
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         self.name = 'John'
-        self.review24 = 'asdfghjklqwertyuiopzxcvb'
-        self.review25 = 'asdfghjklqwertyuiopzxcvbf'
+        self.review24 = ''.join(choice(ascii_letters) for i in range(24))
+        self.review25 = ''.join(choice(ascii_letters) for i in range(random.randint(25, 100)))
         self.product_id = '42'
         self.product_page = ProductPage(self.driver, self.product_id)
         self.product_page.open()

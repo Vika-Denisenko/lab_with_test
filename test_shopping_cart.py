@@ -15,6 +15,7 @@ class ProductPageTest(unittest.TestCase):
         self.url_list = ['33', '47']
         self.qty_list = [2, 1]
         self.product_name = []
+        self.sum = 0
 
     def tearDown(self) -> None:
         self.driver.close()
@@ -27,6 +28,7 @@ class ProductPageTest(unittest.TestCase):
             self.product_page.send_qty(self.qty_list[i])
             self.product_page.cart()
             self.product_name.append(self.product_page.get_name())
+            self.sum += float(self.product_page.get_price())*self.qty_list[i]
 
 
     def test_add_success(self):
@@ -48,8 +50,8 @@ class ProductPageTest(unittest.TestCase):
                 cart_page.get_name(name)
             )
         self.assertEqual(
-            '$606.00',
-            cart_page.total_sum()
+            self.sum,
+            float(cart_page.total_sum()[1:])
         )
 
     def test_clear_cart(self):

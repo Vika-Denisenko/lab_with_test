@@ -11,8 +11,8 @@ class ProductPageTest(unittest.TestCase):
 
     def setUp(self) -> None:
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-        self.product_apple = '42'
-        self.product_page = ProductPage(self.driver, self.product_apple)
+        self.product_url = '42'
+        self.product_page = ProductPage(self.driver, self.product_url)
         self.product_page.open()
 
     def tearDown(self) -> None:
@@ -37,7 +37,7 @@ class ProductPageTest(unittest.TestCase):
         )
 
         self.assertEqual(
-            '$110.00',
+            '$110.00'[1:],
             self.product_page.get_price()
         )
 

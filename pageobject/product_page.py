@@ -11,46 +11,49 @@ class ProductPage(BasePage):
         self.product_id = product_id
 
     def get_url(self) -> str:
-        return 'http://54.183.112.233/index.php?route=product/product&product_id='+self.product_id
+        return 'http://54.183.112.233/index.php?route=product/product&product_id=' + self.product_id
 
     def get_name(self) -> str:
         name = self.driver.find_element(By.TAG_NAME, 'h1')
         return name.text
 
     def get_brand_and_product_code(self) -> str:
-        '''Получаем строку с брэндом и продукт кодом(не нравится мне код, но по другому не придумала как сделать'''
-        brand_and_product_code = self.driver.find_elements(By.CLASS_NAME, 'list-unstyled')
-        brand_and_product_text = ''
-        for brand in brand_and_product_code:
-            brand_and_product_text += brand.text
-        return brand_and_product_text
+        '''Получаем строку с брэндом и продукт кодом'''
+        info_about_product = self.driver.find_elements(By.CLASS_NAME, 'col-sm-4')
+        brand_and_product_code = info_about_product[1].find_element(By.CLASS_NAME, 'list-unstyled').text
+        return brand_and_product_code
 
     def get_price(self) -> str:
         prices = self.driver.find_elements(By.TAG_NAME, 'h2')
-        return prices[1].text
+        return prices[1].text[1:].replace(',', '')
 
     def get_description(self) -> str:
         text_description = self.driver.find_element(By.ID, 'tab-description')
         return text_description.text
 
     def get_tab_review(self) -> WebElement:
-        tab_review = self.driver.find_element(By.XPATH,  '/html/body/div[2]/div/div/div[1]/div[1]/ul[2]/li[3]/a')
+        '''Находим вкладку отзывов'''
+        tab_review = self.driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div[1]/div[1]/ul[2]/li[3]/a')
         return tab_review
 
     def open_review(self):
+        '''Открываем вкладку отзывов'''
         self.get_tab_review().click()
 
     def get_button_review(self) -> WebElement:
+        '''Находим кнопку Continue'''
         return self.driver.find_element(By.ID, 'button-review')
 
     def review(self):
         self.get_button_review().click()
 
     def get_alert_text(self) -> str:
+        '''Читаем текст предупреждения'''
         warning_text = self.driver.find_element(By.CLASS_NAME, 'alert-dismissible')
         return warning_text.text
 
     def get_name_field(self) -> WebElement:
+        '''Находим поле имя во вкладке отзывов'''
         return self.driver.find_element(By.ID, 'input-name')
 
     def get_review_field(self) -> WebElement:
@@ -90,4 +93,3 @@ class ProductPage(BasePage):
 
     def cart(self):
         self.get_button_card().click()
-
