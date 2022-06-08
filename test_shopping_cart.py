@@ -27,7 +27,8 @@ class ProductPageTest(unittest.TestCase):
             self.product_page.open()
             self.product_page.send_qty(self.qty_list[i])
             self.product_page.cart()
-            self.product_name.append(self.product_page.get_name())
+            self.name = self.product_page.get_name()
+            self.product_name.append(self.name)
             self.sum += float(self.product_page.get_price())*self.qty_list[i]
 
 
@@ -35,7 +36,7 @@ class ProductPageTest(unittest.TestCase):
         '''Проверяем успешное добавление товара в корзину'''
         self.add_product_to_cart()
         self.assertEqual(
-            f'Success: You have added {self.product_page.get_name()} to your shopping cart!',
+            f'Success: You have added {self.name} to your shopping cart!',
             self.product_page.get_alert_text().split('\n×')[0]
         )
 
@@ -44,10 +45,10 @@ class ProductPageTest(unittest.TestCase):
         self.add_product_to_cart()
         cart_page = CartPage(self.driver)
         cart_page.open()
-        for name in self.product_name:
+        for self.name in self.product_name:
             self.assertEqual(
-                name,
-                cart_page.get_name(name)
+                self.name,
+                cart_page.get_name(self.name)
             )
         self.assertEqual(
             self.sum,
@@ -62,8 +63,6 @@ class ProductPageTest(unittest.TestCase):
         for _ in range(len(self.product_name)):
             cart_page.remove_cart()
             '''!!!'''
-            cart_page = CartPage(self.driver)
-            cart_page.open()
 
         self.assertIn(
 

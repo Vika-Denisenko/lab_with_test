@@ -16,7 +16,8 @@ class CompareTest(unittest.TestCase):
         self.product_name = []
         self.product_page = ProductPage(self.driver, self.url_list[0])
         self.product_page.open()
-        self.product_name.append(self.product_page.get_name())
+        self.name = self.product_page.get_name()
+        self.product_name.append(self.name)
         self.product_page.compare()
 
     def tearDown(self) -> None:
@@ -34,7 +35,7 @@ class CompareTest(unittest.TestCase):
         for i in range(1, len(self.url_list)):
             product_page = ProductPage(self.driver, self.url_list[i])
             product_page.open()
-            self.product_name.append(product_page.get_name())
+            self.product_name.append(self.name)
             product_page.compare()
 
     def test_product_in_comparison(self):
@@ -43,10 +44,10 @@ class CompareTest(unittest.TestCase):
         compare_page = ComparePage(self.driver)
         compare_page.open()
 
-        for name in self.product_name:
+        for self.name in self.product_name:
             self.assertEqual(
-                name,
-                compare_page.get_name_in_comparison(name)
+                self.name,
+                compare_page.get_name_in_comparison(self.name)
             )
 
     def test_del_product(self):
@@ -61,6 +62,3 @@ class CompareTest(unittest.TestCase):
             'Success: You have modified your product comparison!',
             compare_page.get_alert_text().split('\n×')[0]
         )
-
-
-
