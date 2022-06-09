@@ -5,11 +5,12 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 from pageobject.product_page import ProductPage
+from webdriver_factory import WebDriverFactory
 
 
 class ProductPageTest(unittest.TestCase):
     def setUp(self) -> None:
-        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        self.driver = WebDriverFactory.get_driver()
         self.product_apple = '42'
         self.product_page = ProductPage(self.driver, self.product_apple)
         self.product_page.open()

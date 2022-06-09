@@ -6,12 +6,13 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from pageobject.cart_page import CartPage
 from pageobject.product_page import ProductPage
+from webdriver_factory import WebDriverFactory
 
 
 class ProductPageTest(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        self.driver = WebDriverFactory.get_driver()
         self.url_list = ['33', '47']
         self.qty_list = [2, 1]
         self.product_name = []

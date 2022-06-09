@@ -8,12 +8,13 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 from pageobject.product_page import ProductPage
+from webdriver_factory import WebDriverFactory
 
 
 class AddReviewTest(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        self.driver = WebDriverFactory.get_driver()
         self.name = 'John'
         self.review24 = ''.join(choice(ascii_letters) for _ in range(24))
         self.review25 = ''.join(choice(ascii_letters) for _ in range(random.randint(25, 100)))

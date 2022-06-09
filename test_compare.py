@@ -6,12 +6,13 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from pageobject.compare_page import ComparePage
 from pageobject.product_page import ProductPage
+from webdriver_factory import WebDriverFactory
 
 
 class CompareTest(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        self.driver = WebDriverFactory.get_driver()
         self.url_list = ['42', '33']
         self.product_name = []
         self.product_page = ProductPage(self.driver, self.url_list[0])

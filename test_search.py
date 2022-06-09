@@ -6,11 +6,12 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 from pageobject.search_page import SearchPage
+from webdriver_factory import WebDriverFactory
 
 
 class SearchPageTest(unittest.TestCase):
     def setUp(self) -> None:
-        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        self.driver = WebDriverFactory.get_driver()
         self.search_page = SearchPage(self.driver)
         self.search_page.open()
         self.name_apple = 'Apple Cinema 30"'
