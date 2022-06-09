@@ -11,6 +11,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 class WebDriverFactory:
 
+
     @staticmethod
     def get_driver() -> WebDriver:
         """
