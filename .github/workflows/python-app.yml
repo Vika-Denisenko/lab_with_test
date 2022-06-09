@@ -5,10 +5,10 @@ name: Python application
 
 on:
   push:
-    branches: [ main ]
+    branches: [  https_/github.com/Vika-Denisenko/test_in_cloud.git ]
 
   pull_request:
-    branches: [ main ]
+    branches: [  https_/github.com/Vika-Denisenko/test_in_cloud.git ]
 
 permissions:
   contents: read
