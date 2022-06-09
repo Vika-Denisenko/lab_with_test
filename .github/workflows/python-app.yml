@@ -5,9 +5,9 @@ name: Python application
 
 on:
   push:
-    branches: [ https_/github.com/Vika-Denisenko/test_in_cloud.git ]
+    branches: [ test_in_cloud]
   pull_request:
-    branches: [ https_/github.com/Vika-Denisenko/test_in_cloud.git ]
+    branches: [ test_in_cloud ]
 
 permissions:
   contents: read
