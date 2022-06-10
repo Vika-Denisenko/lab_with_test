@@ -14,6 +14,7 @@ class CompareTest(unittest.TestCase):
     def setUp(self) -> None:
         self.driver = WebDriverFactory.get_driver()
         self.url_list = ['42', '33']
+        self.compared_names = ['Apple Cinema 30"', 'Samsung SyncMaster 941BW']
         self.product_name = []
         self.product_page = ProductPage(self.driver, self.url_list[0])
         self.product_page.open()
@@ -45,10 +46,10 @@ class CompareTest(unittest.TestCase):
         compare_page = ComparePage(self.driver)
         compare_page.open()
 
-        for self.name in self.product_name:
-            self.assertEqual(
-                self.name,
-                compare_page.get_name_in_comparison(self.name)
+        for name in self.product_name:
+            self.assertIn(
+                name,
+                self.compared_names
             )
 
     def test_del_product(self):
