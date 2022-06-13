@@ -9,11 +9,12 @@ from pageobject.product_page import ProductPage
 from webdriver_factory import WebDriverFactory
 
 
-class ProductPageTest(unittest.TestCase):
+class ShoppingCartTest(unittest.TestCase):
 
     def setUp(self) -> None:
         self.driver = WebDriverFactory.get_driver()
-        self.url_list = ['33', '47']
+        self.url_list: list[str] = ['33', '47']
+        self.added_names: list[str] = ['Samsung SyncMaster 941BW', 'HP LP3065']
         self.qty_list = [2, 1]
         self.product_name = []
         self.sum = 0
@@ -30,8 +31,7 @@ class ProductPageTest(unittest.TestCase):
             self.product_page.cart()
             self.name = self.product_page.get_name()
             self.product_name.append(self.name)
-            self.sum += float(self.product_page.get_price())*self.qty_list[i]
-
+            self.sum += float(self.product_page.get_price()) * self.qty_list[i]
 
     def test_add_success(self):
         '''Проверяем успешное добавление товара в корзину'''
@@ -46,10 +46,10 @@ class ProductPageTest(unittest.TestCase):
         self.add_product_to_cart()
         cart_page = CartPage(self.driver)
         cart_page.open()
-        for self.name in self.product_name:
-            self.assertEqual(
-                self.name,
-                cart_page.get_name(self.name)
+        for name in self.product_name:
+            self.assertIn(
+                name,
+                self.added_names
             )
         self.assertEqual(
             self.sum,
