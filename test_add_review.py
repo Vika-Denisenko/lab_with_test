@@ -32,7 +32,6 @@ class AddReviewTest(unittest.TestCase):
         self.assertEqual(
             'Warning: Please select a review rating!',
             self.product_page.get_alert_text()
-
         )
 
     def test_with_24(self):
