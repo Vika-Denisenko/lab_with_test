@@ -63,7 +63,6 @@ class ShoppingCartTest(unittest.TestCase):
         cart_page.open()
         for _ in range(len(self.product_name)):
             cart_page.remove_cart()
-            '''!!!'''
 
         self.assertIn(
 

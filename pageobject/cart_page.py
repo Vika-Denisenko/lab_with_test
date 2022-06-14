@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.expected_conditions import element_to_be_clickable, text_to_be_present_in_element, \
-    title_is, text_to_be_present_in_element_attribute, staleness_of, visibility_of
+    title_is, text_to_be_present_in_element_attribute, staleness_of, visibility_of, invisibility_of_element
 from selenium.webdriver.support.wait import WebDriverWait
 
 from pageobject.base_page import BasePage
@@ -26,7 +26,7 @@ class CartPage(BasePage):
 
     def remove_cart(self):
         self.get_remove_button().click()
-        WebDriverWait(self.driver, timeout=5).until(staleness_of(self.get_remove_button()))
+        WebDriverWait(self.driver, timeout=5).until(invisibility_of_element(self.get_remove_button()))
 
     def get_content_text(self) -> str:
         contents = self.driver.find_elements(By.ID, 'content')
